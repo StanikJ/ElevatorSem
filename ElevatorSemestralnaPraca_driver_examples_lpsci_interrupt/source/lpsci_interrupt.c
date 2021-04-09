@@ -249,6 +249,40 @@ void motorStop() {
 	LPSCI_WriteBlocking(DEMO_LPSCI, motorStopMSG, sizeof(motorStopMSG));
 }
 
+void led0OUT() {
+	uint8_t dataPreCRC[] = {
+			dataPreCRC[0] = 0x10,
+			dataPreCRC[1] = 0x00,
+			dataPreCRC[2] = 0x01
+	};
+	uint8_t LED0O[] = {
+			LED0O[0] = dataMSG,
+			LED0O[1] = 0x10,
+			LED0O[2] = doskaADDR,
+			LED0O[3] = 0x01,
+			LED0O[4] = 0x01,
+			LED0O[5] = crc8_calc(dataPreCRC, sizeof(dataPreCRC))
+	};
+			LPSCI_WriteBlocking(DEMO_LPSCI, LED0O, sizeof(LED0O));
+}
+
+void led0IN() {
+	uint8_t dataPreCRC[] = {
+			dataPreCRC[0] = 0x20,
+			dataPreCRC[1] = 0x00,
+			dataPreCRC[2] = 0x01
+	};
+	uint8_t LED0I[] = {
+			LED0I[0] = dataMSG,
+			LED0I[1] = 0x20,
+			LED0I[2] = doskaADDR,
+			LED0I[3] = 0x01,
+			LED0I[4] = 0x01,
+			LED0I[5] = crc8_calc(dataPreCRC, sizeof(dataPreCRC))
+		};
+				LPSCI_WriteBlocking(DEMO_LPSCI, LED0I, sizeof(LED0I));
+}
+
 
 
 /*!
@@ -283,6 +317,12 @@ int main(void)
        	    		if(message[2] == 0xc0){
        	    			motorDole();
        	    			delay(1500);
+       	    		}
+       	    		if(message[2] == 0xb0){
+       	    			led0IN();
+       	    		}
+       	    		if(message[2] == 0xb4){
+       	    			led0OUT();
        	    		}
        	    		if(message[2] == 0xc4){
        	    			motorHore();
