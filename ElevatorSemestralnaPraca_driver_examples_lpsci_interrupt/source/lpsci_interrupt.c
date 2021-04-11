@@ -61,6 +61,7 @@
 volatile uint8_t message[BUFFER_SIZE];
 volatile uint8_t rxIndex = 0;
 volatile bool messageComplete = false;
+volatile bool destinacia = false;
 
 /*******************************************************************************
  * Code
@@ -240,11 +241,12 @@ void motorStop() {
 			dataPreCRC[2] = 0x01
 	};
 	uint8_t motorStopMSG[] = {
-			motorStopMSG[0] = dataMSG, 0xf1,
-			motorStopMSG[1] = doskaADDR,
-			motorStopMSG[2] = 0x01,
+			motorStopMSG[0] = dataMSG,
+			motorStopMSG[1] = 0xf1,
+			motorStopMSG[2] = doskaADDR,
 			motorStopMSG[3] = 0x01,
-			motorStopMSG[4] = crc8_calc(dataPreCRC, sizeof(dataPreCRC))
+			motorStopMSG[4] = 0x01,
+			motorStopMSG[5] = crc8_calc(dataPreCRC, sizeof(dataPreCRC))
 	};
 	LPSCI_WriteBlocking(DEMO_LPSCI, motorStopMSG, sizeof(motorStopMSG));
 }
@@ -307,8 +309,7 @@ int main(void)
     LPSCI_EnableInterrupts(DEMO_LPSCI, kLPSCI_RxDataRegFullInterruptEnable);
     EnableIRQ(DEMO_LPSCI_IRQn);
 
-    motorHore();
-    delay(2500);
+
        while (1)
        {
        	    	if(messageComplete == true) {
@@ -324,12 +325,20 @@ int main(void)
        	    		if(message[2] == 0xb4){
        	    			led0OUT();
        	    		}
+       	    		if(message[2] == 0xc2){
+       	    			destinacia = true;
+       	    			motorHore();
+       	    		}
+       	    		if((message[2] == 0xe2) && (destinacia = true)){
+          	    		motorDole();
+       	    		}
        	    		if(message[2] == 0xc4){
        	    			motorHore();
        	    			delay(1500);
        	    		}
        	    		rxIndex=0;
        	    		messageComplete = false;
+       	    		destinacia = false;
        	    	}
        }
 }
