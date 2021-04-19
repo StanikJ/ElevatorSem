@@ -592,6 +592,44 @@ void led4INZhasni() {
 				LPSCI_WriteBlocking(DEMO_LPSCI, LED0I, sizeof(LED0I));
 }
 
+
+void displayHore() {
+	uint8_t dataPreCRC[] = {
+			dataPreCRC[0] = 0x30,
+			dataPreCRC[1] = 0x00,
+			dataPreCRC[2] = 0x01,
+			dataPreCRC[3] = '1'
+	};
+	uint8_t displayHoreMSG[] = {
+			displayHoreMSG[0] = dataMSG,
+			displayHoreMSG[1] = 0x30,
+			displayHoreMSG[2] = doskaADDR,
+			displayHoreMSG[3] = 0x02,
+			displayHoreMSG[4] = 0x01,
+			displayHoreMSG[5] = '1',
+			displayHoreMSG[6] = crc8_calc(dataPreCRC, sizeof(dataPreCRC)) };
+	LPSCI_WriteBlocking(DEMO_LPSCI, displayHoreMSG, sizeof(displayHoreMSG));
+}
+
+void displayDole() {
+	uint8_t dataPreCRC[] = {
+			dataPreCRC[0] = 0x30,
+			dataPreCRC[1] = 0x00,
+			dataPreCRC[2] = 0x02,
+			dataPreCRC[3] = '2'
+	};
+	uint8_t displayDoleMSG[] = {
+			displayDoleMSG[0] = dataMSG,
+			displayDoleMSG[1] = 0x30,
+			displayDoleMSG[2] = doskaADDR,
+			displayDoleMSG[3] = 0x02,
+			displayDoleMSG[4] = 0x02,
+			displayDoleMSG[5] = '2',
+			displayDoleMSG[6] = crc8_calc(dataPreCRC, sizeof(dataPreCRC)) };
+	LPSCI_WriteBlocking(DEMO_LPSCI, displayDoleMSG, sizeof(displayDoleMSG));
+}
+
+
 /*!
  * @brief Main function
  */
@@ -621,34 +659,24 @@ int main(void)
        	    		acknowledgmentSprava(message[2]);
        	    		delay(150);
        	    		if(message[2] == 0xc0){
-       	    			led0IN();
-       	    			delay(20);
-       	    			led0OUT();
+       	    			dvereZatvor();
+       	    			delay(100);
        	    		}
        	    		if(message[2] == 0xb0){
-       	    			led0INZhasni();
-       	    			delay(20);
-       	         	    led0OUTZhasni();
+       	    			dvereOtvor();
+       	    			delay(100);
        	    		}
        	    		if(message[2] == 0xc1){
-       	    			led1IN();
-       	    			delay(20);
-       	    			led1OUT();
+       	    			motorDole();
        	    		}
        	    		if(message[2] == 0xb1){
-       	    			led1INZhasni();
-       	    			delay(20);
-       	    			led1OUTZhasni();
+       	    			motorDole();
        	    		}
        	    		if(message[2] == 0xc2){
-       	    			led2IN();
-       	    			delay(20);
-       	    			led2OUT();
+       	    			displayDole();
        	    		}
        	    		if(message[2] == 0xb2){
-       	    			led2INZhasni();
-       	    			delay(20);
-       	    			led2OUTZhasni();
+       	    			displayHore();
        	    		}
        	    		if(message[2] == 0xc3){
        	    		    led3IN();
