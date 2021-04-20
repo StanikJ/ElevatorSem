@@ -170,7 +170,7 @@ void dvereZatvor(){
 			dvereZatvorMSG[1] = 0xf0,
 			dvereZatvorMSG[2] = doskaADDR,
 			dvereZatvorMSG[3] = 0x01,
-			dvereZatvorMSG[4] = 0x00,
+			dvereZatvorMSG[4] = 0x01,
 			dvereZatvorMSG[5] = crc8_calc(dataPreCRC, sizeof(dataPreCRC))
 	};
 		LPSCI_WriteBlocking(DEMO_LPSCI, dvereZatvorMSG, sizeof(dvereZatvorMSG));
@@ -653,6 +653,8 @@ int main(void)
     EnableIRQ(DEMO_LPSCI_IRQn);
 
 
+    dvereZatvor();
+    delay(1000);
        while (1)
        {
        	    	if(messageComplete == true) {
@@ -673,7 +675,7 @@ int main(void)
        	    			motorDole();
        	    		}
        	    		if(message[2] == 0xc2){
-       	    			displayDole();
+       	    			motorStop();
        	    		}
        	    		if(message[2] == 0xb2){
        	    			displayHore();
