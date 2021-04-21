@@ -62,6 +62,17 @@ volatile uint8_t message[BUFFER_SIZE];
 volatile uint8_t rxIndex = 0;
 volatile bool messageComplete = false;
 volatile bool destinacia = false;
+volatile uint8_t pozadovanePoschodie = 0;
+volatile uint8_t posledneZnamePoschodie = 0;
+volatile uint8_t aktualnePoschodie = 0;
+volatile bool ideHore = false;
+volatile bool ideDole = false;
+volatile bool stoji = false;
+volatile bool poschodie0 = false;
+volatile bool poschodie1 = false;
+volatile bool poschodie2 = false;
+volatile bool poschodie3 = false;
+volatile bool poschodie4 = false;
 
 /*******************************************************************************
  * Code
@@ -653,56 +664,58 @@ int main(void)
     EnableIRQ(DEMO_LPSCI_IRQn);
 
 
-    dvereZatvor();
-    delay(1000);
+    motorDole();
+    aktualnePoschodie = 0xe0;
+    posledneZnamePoschodie = 0xe0;
        while (1)
        {
        	    	if(messageComplete == true) {
        	    		acknowledgmentSprava(message[2]);
-       	    		delay(150);
-       	    		if(message[2] == 0xc0){
-       	    			dvereZatvor();
-       	    			delay(100);
+       	    		delay(10);
+       	    		if(message[2] == 0xc0 || message[2] == 0xb0){
+       	    			pozadovanePoschodie = 0xe0;
+       	    			poschodie0 = true;
        	    		}
-       	    		if(message[2] == 0xb0){
-       	    			dvereOtvor();
-       	    			delay(100);
+       	    		if(message[2] == 0xc1 || message[2] == 0xb1){
+       	    			pozadovanePoschodie = 0xe1;
+       	    			poschodie1 = true;
        	    		}
-       	    		if(message[2] == 0xc1){
+       	    		if(message[2] == 0xc2 || message[2] == 0xb2){
+       	    			pozadovanePoschodie = 0xe2;
+       	    			poschodie2 = true;
+       	    		}
+       	    		if(message[2] == 0xc3 || message[2] == 0xb3){
+       	    			pozadovanePoschodie = 0xe3;
+       	    			poschodie3 = true;
+       	    		}
+       	    		if(message[2] == 0xc4 || message[2] == 0xb4){
+       	    			pozadovanePoschodie = 0xe4;
+       	    			poschodie4 = true;
+       	    		}
+       	    		if(pozadovanePoschodie == aktualnePoschodie){
+       	    			/*stoji = true;
+       	    			ideHore = false;
+       	    			ideDole = false;
+       	    			dvereZatvor();*/
+       	   			}
+       	   			if(pozadovanePoschodie > aktualnePoschodie){
+       	   				ideHore = true;
+       	   				stoji = false;
+       	   				ideDole = false;
+       	   				motorHore();
+       	    		}
+       	    		if(pozadovanePoschodie < aktualnePoschodie){
+       	    			ideDole = true;
+       	    			ideHore = false;
+       	    			stoji = false;
        	    			motorDole();
        	    		}
-       	    		if(message[2] == 0xb1){
-       	    			motorDole();
-       	    		}
-       	    		if(message[2] == 0xc2){
+       	    		if((message[2] == pozadovanePoschodie) && ((ideHore == true) || (ideDole == true))){
        	    			motorStop();
-       	    		}
-       	    		if(message[2] == 0xb2){
-       	    			displayHore();
-       	    		}
-       	    		if(message[2] == 0xc3){
-       	    		    led3IN();
-       	    		    delay(20);
-       	    		    led3OUT();
-       	    		}
-       	    		if(message[2] == 0xb3){
-       	    		    led3INZhasni();
-       	    		    delay(20);
-       	    		    led3OUTZhasni();
-       	    		}
-       	    		if(message[2] == 0xc4){
-       	    		     led4IN();
-       	    		     delay(20);
-       	    		     led4OUT();
-       	    		}
-       	    		if(message[2] == 0xb4){
-       	    		     led4INZhasni();
-       	    		     delay(20);
-       	    		     led4OUTZhasni();
+       	    			aktualnePoschodie = pozadovanePoschodie;
        	    		}
        	    		rxIndex=0;
        	    		messageComplete = false;
-       	    		destinacia = false;
        	    	}
        }
 }
