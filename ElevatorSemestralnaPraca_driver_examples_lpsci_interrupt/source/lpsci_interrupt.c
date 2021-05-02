@@ -52,12 +52,6 @@
 /*! @brief Ring buffer size (Unit: Byte). */
 #define BUFFER_SIZE 20
 
-/*! @brief Ring buffer to save received data. */
-
-/*******************************************************************************
- * Prototypes
- ******************************************************************************/
-
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -101,11 +95,10 @@ void DEMO_LPSCI_IRQHandler(void)
     }
 }
 
-void delay(int millis) {
-	int i = 0;
-	while(i==millis * 10000) {
-		i++;
-		__asm("nop");
+void delay(uint32_t t){
+	volatile uint32_t i = 0;
+	for(i=0; i<150000 * t; i++){
+		__asm("NOP");
 	}
 }
 
@@ -629,28 +622,28 @@ void Display(uint8_t smer, uint8_t poschodie) {
 void stlaceneTlacidla(uint8_t stlaceneTlacidlo){
 		if(stlaceneTlacidlo == 0xc0 || stlaceneTlacidlo == 0xb0){
 			poschodie0 = true;
-				led0OUT();
-				led0IN();
+			led0OUT();
+			led0IN();
 		}
 		if(stlaceneTlacidlo == 0xc1 || stlaceneTlacidlo == 0xb1){
 			poschodie1 = true;
-				led1OUT();
-				led1IN();
+			led1OUT();
+			led1IN();
 		}
 		if(stlaceneTlacidlo == 0xc2 || stlaceneTlacidlo == 0xb2){
 			poschodie2 = true;
-				led2OUT();
-				led2IN();
+			led2OUT();
+			led2IN();
 		}
 		if(stlaceneTlacidlo == 0xc3 || stlaceneTlacidlo == 0xb3){
 			poschodie3 = true;
-				led3OUT();
-				led3IN();
+			led3OUT();
+			led3IN();
 		}
 		if(stlaceneTlacidlo == 0xc4 || stlaceneTlacidlo == 0xb4){
 			poschodie4 = true;
-				led4OUT();
-				led4IN();
+			led4OUT();
+			led4IN();
 		}
 }
 
@@ -726,8 +719,9 @@ void zastavNaPoschodi(){
 		aktualnePoschodie = 0xe0;
 		if(poschodie0==true){
 			motorStop();
-			delay(2000);
+			delay(30);
 			zhasniLed();
+			dvereOtvor();
 			poschodie0 = false;
 			ideHore=false;
 			ideDole=false;
@@ -737,8 +731,9 @@ void zastavNaPoschodi(){
 		aktualnePoschodie = 0xe1;
 		if(poschodie1==true){
 			motorStop();
-			delay(2000);
+			delay(30);
 			zhasniLed();
+			dvereOtvor();
 			poschodie1 = false;
 			ideHore=false;
 			ideDole=false;
@@ -748,8 +743,9 @@ void zastavNaPoschodi(){
 		aktualnePoschodie = 0xe2;
 		if(poschodie2==true){
 			motorStop();
-			delay(2000);
+			delay(30);
 			zhasniLed();
+			dvereOtvor();
 			poschodie2 = false;
 			ideHore=false;
 			ideDole=false;
@@ -759,8 +755,9 @@ void zastavNaPoschodi(){
 		aktualnePoschodie = 0xe3;
 		if(poschodie3==true){
 			motorStop();
-			delay(2000);
+			delay(30);
 			zhasniLed();
+			dvereOtvor();
 			poschodie3 = false;
 			ideHore=false;
 			ideDole=false;
@@ -770,8 +767,9 @@ void zastavNaPoschodi(){
 		aktualnePoschodie = 0xe4;
 		if(poschodie4==true){
 			motorStop();
-			delay(2000);
+			delay(30);
 			zhasniLed();
+			dvereOtvor();
 			poschodie4 = false;
 			ideHore=false;
 			ideDole=false;
@@ -784,11 +782,15 @@ void nastavDest(){
 	if(poschodie4 == true){
 		pozadovanePoschodie = 0xe4;
 		if(pozadovanePoschodie> aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorHore();
 			ideHore=true;
 			ideDole=false;
 		}
 		if(pozadovanePoschodie < aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorDole();
 			ideHore=false;
 			ideDole=true;
@@ -797,11 +799,15 @@ void nastavDest(){
 	if(poschodie3 == true){
 		pozadovanePoschodie = 0xe3;
 		if(pozadovanePoschodie> aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorHore();
 			ideHore=true;
 			ideDole=false;
 		}
 		if(pozadovanePoschodie < aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorDole();
 			ideHore=false;
 			ideDole=true;
@@ -810,11 +816,15 @@ void nastavDest(){
 	if(poschodie2 == true){
 		pozadovanePoschodie = 0xe2;
 		if(pozadovanePoschodie> aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorHore();
 			ideHore=true;
 			ideDole=false;
 		}
 		if(pozadovanePoschodie < aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorDole();
 			ideHore=false;
 			ideDole=true;
@@ -823,11 +833,15 @@ void nastavDest(){
 	if(poschodie1 == true){
 		pozadovanePoschodie = 0xe1;
 		if(pozadovanePoschodie> aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorHore();
 			ideHore=true;
 			ideDole=false;
 		}
 		if(pozadovanePoschodie < aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorDole();
 			ideHore=false;
 			ideDole=true;
@@ -836,11 +850,15 @@ void nastavDest(){
 	if(poschodie0 == true){
 		pozadovanePoschodie = 0xe0;
 		if(pozadovanePoschodie> aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorHore();
 			ideHore=true;
 			ideDole=false;
 		}
 		if(pozadovanePoschodie < aktualnePoschodie){
+			dvereZatvor();
+			delay(30);
 			motorDole();
 			ideHore=false;
 			ideDole=true;
@@ -871,7 +889,7 @@ int main(void)
     EnableIRQ(DEMO_LPSCI_IRQn);
 
     dvereZatvor();
-    delay(200);
+    delay(30);
     motorDole();
     poschodie0 = true;
     ideDole = true;
@@ -880,7 +898,7 @@ int main(void)
        {
        	    	if(messageComplete == true) {
        	    		acknowledgmentSprava(message[2]);
-       	    		delay(10);
+       	    		delay(3);
 
        	    		stlaceneTlacidla(message[2]);
        	    		zastavNaPoschodi();
