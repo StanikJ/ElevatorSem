@@ -44,6 +44,9 @@
 #define doskaADDR 0x00
 #define acknowledgeMSG 0xa1
 #define dataMSG 0xa0
+#define smerVypnuty 0x03
+#define smerDole 0x02
+#define smerHore 0x01
 
 
 /*! @brief Ring buffer size (Unit: Byte). */
@@ -102,8 +105,8 @@ void delay(int millis) {
 	int i = 0;
 	while(i==millis * 10000) {
 		i++;
+		__asm("nop");
 	}
-	__asm("nop");
 }
 
 
@@ -603,44 +606,248 @@ void led4INZhasni() {
 				LPSCI_WriteBlocking(DEMO_LPSCI, LED0I, sizeof(LED0I));
 }
 
-
-void displayHore() {
+void Display(uint8_t smer, uint8_t poschodie) {
 	uint8_t dataPreCRC[] = {
 			dataPreCRC[0] = 0x30,
 			dataPreCRC[1] = 0x00,
-			dataPreCRC[2] = 0x01,
-			dataPreCRC[3] = '1'
+			dataPreCRC[2] = smer,
+			dataPreCRC[3] = poschodie
 	};
-	uint8_t displayHoreMSG[] = {
-			displayHoreMSG[0] = dataMSG,
-			displayHoreMSG[1] = 0x30,
-			displayHoreMSG[2] = doskaADDR,
-			displayHoreMSG[3] = 0x02,
-			displayHoreMSG[4] = 0x01,
-			displayHoreMSG[5] = '1',
-			displayHoreMSG[6] = crc8_calc(dataPreCRC, sizeof(dataPreCRC)) };
-	LPSCI_WriteBlocking(DEMO_LPSCI, displayHoreMSG, sizeof(displayHoreMSG));
-}
-
-void displayDole() {
-	uint8_t dataPreCRC[] = {
-			dataPreCRC[0] = 0x30,
-			dataPreCRC[1] = 0x00,
-			dataPreCRC[2] = 0x02,
-			dataPreCRC[3] = '2'
+	uint8_t displayMSG[] = {
+			displayMSG[0] = dataMSG,
+			displayMSG[1] = 0x30,
+			displayMSG[2] = doskaADDR,
+			displayMSG[3] = 0x02,
+			displayMSG[4] = smer,
+			displayMSG[5] = poschodie,
+			displayMSG[6] = crc8_calc(dataPreCRC, sizeof(dataPreCRC))
 	};
-	uint8_t displayDoleMSG[] = {
-			displayDoleMSG[0] = dataMSG,
-			displayDoleMSG[1] = 0x30,
-			displayDoleMSG[2] = doskaADDR,
-			displayDoleMSG[3] = 0x02,
-			displayDoleMSG[4] = 0x02,
-			displayDoleMSG[5] = '2',
-			displayDoleMSG[6] = crc8_calc(dataPreCRC, sizeof(dataPreCRC)) };
-	LPSCI_WriteBlocking(DEMO_LPSCI, displayDoleMSG, sizeof(displayDoleMSG));
+	LPSCI_WriteBlocking(DEMO_LPSCI, displayMSG, sizeof(displayMSG));
 }
 
 
+void stlaceneTlacidla(uint8_t stlaceneTlacidlo){
+		if(stlaceneTlacidlo == 0xc0 || stlaceneTlacidlo == 0xb0){
+			poschodie0 = true;
+				led0OUT();
+				led0IN();
+		}
+		if(stlaceneTlacidlo == 0xc1 || stlaceneTlacidlo == 0xb1){
+			poschodie1 = true;
+				led1OUT();
+				led1IN();
+		}
+		if(stlaceneTlacidlo == 0xc2 || stlaceneTlacidlo == 0xb2){
+			poschodie2 = true;
+				led2OUT();
+				led2IN();
+		}
+		if(stlaceneTlacidlo == 0xc3 || stlaceneTlacidlo == 0xb3){
+			poschodie3 = true;
+				led3OUT();
+				led3IN();
+		}
+		if(stlaceneTlacidlo == 0xc4 || stlaceneTlacidlo == 0xb4){
+			poschodie4 = true;
+				led4OUT();
+				led4IN();
+		}
+}
+
+void zhasniLed(){
+	led0INZhasni();
+	led0OUTZhasni();
+	led1INZhasni();
+	led1OUTZhasni();
+	led2INZhasni();
+	led2OUTZhasni();
+	led3INZhasni();
+	led3OUTZhasni();
+	led4INZhasni();
+	led4OUTZhasni();
+}
+
+void displaySmerSet(uint8_t poschodie){
+	if(ideHore == true){
+		if(poschodie == 0xe0){
+			Display(smerHore, 'P');
+		}
+		if(poschodie == 0xe1){
+			Display(smerHore, '1');
+		}
+		if(poschodie == 0xe2){
+			Display(smerHore, '2');
+		}
+		if(poschodie == 0xe3){
+			Display(smerHore, '3');
+		}
+		if(poschodie == 0xe4){
+			Display(smerHore, '4');
+		}
+	}
+	if(ideDole == true){
+		if(poschodie == 0xe0){
+			Display(smerDole, 'P');
+		}
+		if(poschodie == 0xe1){
+			Display(smerDole, '1');
+		}
+		if(poschodie == 0xe2){
+			Display(smerDole, '2');
+		}
+		if(poschodie == 0xe3){
+			Display(smerDole, '3');
+		}
+		if(poschodie == 0xe4){
+			Display(smerDole, '4');
+		}
+	}
+	if(ideHore == false && ideDole == false){
+		if(poschodie == 0xe0){
+			Display(smerVypnuty, 'P');
+		}
+		if(poschodie == 0xe1){
+			Display(smerVypnuty, '1');
+		}
+		if(poschodie == 0xe2){
+			Display(smerVypnuty, '2');
+		}
+		if(poschodie == 0xe3){
+			Display(smerVypnuty, '3');
+		}
+		if(poschodie == 0xe4){
+			Display(smerVypnuty, '4');
+		}
+	}
+}
+
+void zastavNaPoschodi(){
+	if(message[2] == 0xe0){
+		aktualnePoschodie = 0xe0;
+		if(poschodie0==true){
+			motorStop();
+			delay(2000);
+			zhasniLed();
+			poschodie0 = false;
+			ideHore=false;
+			ideDole=false;
+		}
+	}
+	if(message[2] == 0xe1){
+		aktualnePoschodie = 0xe1;
+		if(poschodie1==true){
+			motorStop();
+			delay(2000);
+			zhasniLed();
+			poschodie1 = false;
+			ideHore=false;
+			ideDole=false;
+		}
+	}
+	if(message[2] == 0xe2){
+		aktualnePoschodie = 0xe2;
+		if(poschodie2==true){
+			motorStop();
+			delay(2000);
+			zhasniLed();
+			poschodie2 = false;
+			ideHore=false;
+			ideDole=false;
+		}
+	}
+	if(message[2] == 0xe3){
+		aktualnePoschodie = 0xe3;
+		if(poschodie3==true){
+			motorStop();
+			delay(2000);
+			zhasniLed();
+			poschodie3 = false;
+			ideHore=false;
+			ideDole=false;
+		}
+	}
+	if(message[2] == 0xe4){
+		aktualnePoschodie = 0xe4;
+		if(poschodie4==true){
+			motorStop();
+			delay(2000);
+			zhasniLed();
+			poschodie4 = false;
+			ideHore=false;
+			ideDole=false;
+		}
+	}
+}
+
+void nastavDest(){
+	if(aktualnePoschodie == pozadovanePoschodie){
+	if(poschodie4 == true){
+		pozadovanePoschodie = 0xe4;
+		if(pozadovanePoschodie> aktualnePoschodie){
+			motorHore();
+			ideHore=true;
+			ideDole=false;
+		}
+		if(pozadovanePoschodie < aktualnePoschodie){
+			motorDole();
+			ideHore=false;
+			ideDole=true;
+		}
+	}
+	if(poschodie3 == true){
+		pozadovanePoschodie = 0xe3;
+		if(pozadovanePoschodie> aktualnePoschodie){
+			motorHore();
+			ideHore=true;
+			ideDole=false;
+		}
+		if(pozadovanePoschodie < aktualnePoschodie){
+			motorDole();
+			ideHore=false;
+			ideDole=true;
+		}
+	}
+	if(poschodie2 == true){
+		pozadovanePoschodie = 0xe2;
+		if(pozadovanePoschodie> aktualnePoschodie){
+			motorHore();
+			ideHore=true;
+			ideDole=false;
+		}
+		if(pozadovanePoschodie < aktualnePoschodie){
+			motorDole();
+			ideHore=false;
+			ideDole=true;
+		}
+	}
+	if(poschodie1 == true){
+		pozadovanePoschodie = 0xe1;
+		if(pozadovanePoschodie> aktualnePoschodie){
+			motorHore();
+			ideHore=true;
+			ideDole=false;
+		}
+		if(pozadovanePoschodie < aktualnePoschodie){
+			motorDole();
+			ideHore=false;
+			ideDole=true;
+		}
+	}
+	if(poschodie0 == true){
+		pozadovanePoschodie = 0xe0;
+		if(pozadovanePoschodie> aktualnePoschodie){
+			motorHore();
+			ideHore=true;
+			ideDole=false;
+		}
+		if(pozadovanePoschodie < aktualnePoschodie){
+			motorDole();
+			ideHore=false;
+			ideDole=true;
+		}
+	}
+	}
+}
 /*!
  * @brief Main function
  */
@@ -663,59 +870,26 @@ int main(void)
     LPSCI_EnableInterrupts(DEMO_LPSCI, kLPSCI_RxDataRegFullInterruptEnable);
     EnableIRQ(DEMO_LPSCI_IRQn);
 
-
+    dvereZatvor();
+    delay(200);
     motorDole();
-    aktualnePoschodie = 0xe0;
-    posledneZnamePoschodie = 0xe0;
+    poschodie0 = true;
+    ideDole = true;
+    pozadovanePoschodie = 0xe0;
        while (1)
        {
        	    	if(messageComplete == true) {
        	    		acknowledgmentSprava(message[2]);
        	    		delay(10);
-       	    		if(message[2] == 0xc0 || message[2] == 0xb0){
-       	    			pozadovanePoschodie = 0xe0;
-       	    			poschodie0 = true;
-       	    		}
-       	    		if(message[2] == 0xc1 || message[2] == 0xb1){
-       	    			pozadovanePoschodie = 0xe1;
-       	    			poschodie1 = true;
-       	    		}
-       	    		if(message[2] == 0xc2 || message[2] == 0xb2){
-       	    			pozadovanePoschodie = 0xe2;
-       	    			poschodie2 = true;
-       	    		}
-       	    		if(message[2] == 0xc3 || message[2] == 0xb3){
-       	    			pozadovanePoschodie = 0xe3;
-       	    			poschodie3 = true;
-       	    		}
-       	    		if(message[2] == 0xc4 || message[2] == 0xb4){
-       	    			pozadovanePoschodie = 0xe4;
-       	    			poschodie4 = true;
-       	    		}
-       	    		if(pozadovanePoschodie == aktualnePoschodie){
-       	    			/*stoji = true;
-       	    			ideHore = false;
-       	    			ideDole = false;
-       	    			dvereZatvor();*/
-       	   			}
-       	   			if(pozadovanePoschodie > aktualnePoschodie){
-       	   				ideHore = true;
-       	   				stoji = false;
-       	   				ideDole = false;
-       	   				motorHore();
-       	    		}
-       	    		if(pozadovanePoschodie < aktualnePoschodie){
-       	    			ideDole = true;
-       	    			ideHore = false;
-       	    			stoji = false;
-       	    			motorDole();
-       	    		}
-       	    		if((message[2] == pozadovanePoschodie) && ((ideHore == true) || (ideDole == true))){
-       	    			motorStop();
-       	    			aktualnePoschodie = pozadovanePoschodie;
-       	    		}
+
+       	    		stlaceneTlacidla(message[2]);
+       	    		zastavNaPoschodi();
+       	    		nastavDest();
+       	    		displaySmerSet(message[2]);
+
        	    		rxIndex=0;
        	    		messageComplete = false;
        	    	}
        }
+
 }
