@@ -5,6 +5,13 @@
  *      Author: Jojo
  */
 
+/**
+* @file Motor.c
+* @brief Funkcie na ovládanie pohybu výťahu
+* @details Pomocou nasledujúcich funkcií ovládame pohyb výťahu, pohyb hore, dole a zastav motor.
+*
+*/
+
 #include "Headers/Definitions.h"
 #include "Headers/Motor.h"
 

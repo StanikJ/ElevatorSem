@@ -5,13 +5,21 @@
  *      Author: Jojo
  */
 
+/**
+* @file stlaceneTlacidla.c
+* @brief Funkcia na čítanie stlačených tlačidiel
+* @details Funkcia číta stlačené tlačidlá, a nastavuje globálne premenné
+*
+*/
+
 #include "Headers/Variables.h"
 #include "Headers/stlaceneTlacidla.h"
 #include "Headers/Led.h"
 
-/*
+/*!
  * Funkcia, ktorá má za úlohu, po stlačení ľubovolného tlačidla zasvietiť prislúšné ledky a nastaviť
  * hodnotu prislúšného poschodia na true
+ *
  */
 void stlaceneTlacidla(uint8_t stlaceneTlacidlo){
 		if(stlaceneTlacidlo == 0xc0 || stlaceneTlacidlo == 0xb0){

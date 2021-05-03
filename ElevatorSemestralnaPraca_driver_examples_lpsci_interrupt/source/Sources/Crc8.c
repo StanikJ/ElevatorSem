@@ -5,6 +5,13 @@
  *      Author: Jojo
  */
 
+/**
+* @file Crc8.c
+* @brief CRC8 kód
+* @details Funkcia pre výpočet CRC8
+*
+*/
+
 #include "Headers/Crc8.h"
 
 unsigned char crc8_calc(unsigned char *data, const unsigned int elements){

@@ -5,6 +5,13 @@
  *      Author: Jojo
  */
 
+/**
+* @file Led.c
+* @brief Základné funkcie pre led
+* @details Pomocou nasledujúcich funkcií riešime zapínanie a vypínanie lediek.
+*
+*/
+
 #include "Headers/Definitions.h"
 #include "Headers/Led.h"
 
@@ -348,6 +355,10 @@ void led4INZhasni() {
 		};
 				LPSCI_WriteBlocking(DEMO_LPSCI, LED0I, sizeof(LED0I));
 }
+
+/*!
+ * funkcia, pomocou ktorej zhasneme všetky led
+ */
 
 void zhasniLed(){
 	led0INZhasni();

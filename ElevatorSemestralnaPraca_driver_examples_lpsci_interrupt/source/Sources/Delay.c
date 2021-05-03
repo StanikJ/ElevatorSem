@@ -5,8 +5,19 @@
  *      Author: Jojo
  */
 
+/**
+* @file Delay.c
+* @brief Funkcia delay
+* @details Funkcia, ktorá čaká určitý počet miliskekúnd
+*
+*/
+
 #include "Headers/Variables.h"
 #include "Headers/Delay.h"
+
+/*!
+* zdroj: cvičenia
+*/
 
 void delay(uint32_t t){
 	volatile uint32_t i = 0;

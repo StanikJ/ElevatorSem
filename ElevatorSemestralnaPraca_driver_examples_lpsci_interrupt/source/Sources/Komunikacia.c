@@ -5,6 +5,13 @@
  *      Author: Jojo
  */
 
+/**
+* @file Komunikacia.c
+* @brief Odosielanie potvrdzujúcej správy
+* @details Nasldujúca funkcia, odošle výťahu správu o potvrdení, že správa od výťahu bola prijatá
+*
+*/
+
 #include "Headers/Definitions.h"
 #include "Headers/Komunikacia.h"
 #include "Headers/Crc8.h"

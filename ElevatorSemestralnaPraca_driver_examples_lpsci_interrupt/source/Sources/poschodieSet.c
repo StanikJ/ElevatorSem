@@ -5,17 +5,24 @@
  *      Author: Jojo
  */
 
+/**
+* @file poschodieSet.c
+* @brief Funkcie na manipulovanie s poschodiami
+* @details Nasledujúce funkcie riešia zastavovanie výťahu na konkrétnom poschodí a nastavovanie smeru výťahu
+*
+*/
+
 #include "Headers/Variables.h"
 #include "Headers/Motor.h"
 #include "Headers/Dvere.h"
 #include "Headers/Led.h"
 #include "Headers/Delay.h"
 
-/*
- * Funkcia, ktorá má za úlohu čítať aktualné switche výťahu. Popri čítaní nastavuje
- * aktuálne poschodie na výpis na display a ak je prislúšné poschodie nastavene na true,
- * tak na danom poschodí zastaví, otvorí dvere a vypne ledky.
- */
+/*!
+* Funkcia, ktorá má za úlohu čítať aktualné switche výťahu. Popri čítaní nastavuje
+* aktuálne poschodie na výpis na display a ak je prislúšné poschodie nastavene na true,
+* tak na danom poschodí zastaví, otvorí dvere a vypne ledky.
+*/
 
 void zastavNaPoschodi(){
 	if(message[2] == 0xe0){
@@ -80,10 +87,11 @@ void zastavNaPoschodi(){
 	}
 }
 
-/*
- * Funkcia, ktorá nastavuje požadované(cielové) poschodie podľa toho, či bolo stlačené tlačidlo a či bolo na hodnotu
- * true nastavené jemu prislúchajúce poschodie. Následne rozpozná akým smerom sa má výťah vybrať.
- */
+/*!
+*Funkcia, ktorá nastavuje požadované(cielové) poschodie podľa toho, či bolo stlačené tlačidlo a či bolo na hodnotu
+* true nastavené jemu prislúchajúce poschodie. Následne rozpozná akým smerom sa má výťah vybrať.
+*/
+
 void nastavDest(){
 	if(aktualnePoschodie == pozadovanePoschodie){
 		if(poschodie4 == true){

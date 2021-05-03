@@ -5,10 +5,21 @@
  *      Author: Jojo
  */
 
+/**
+* @file Display.c
+* @brief Zobrazovanie pohybu výťahu
+* @details Nasldujúce funkcie vypisujú na display smer pohybu a aktuálne poschodie
+*
+*/
+
 #include "Headers/Definitions.h"
 #include "Headers/Variables.h"
 #include "Headers/Display.h"
 #include "Headers/Crc8.h"
+
+/*!
+ * Funkcia, ktorá vypisuje na display, aktuálne číslo poschodia a smer pohybu výťahu
+ */
 
 void Display(uint8_t smer, uint8_t poschodie) {
 	uint8_t dataPreCRC[] = {
@@ -28,6 +39,11 @@ void Display(uint8_t smer, uint8_t poschodie) {
 	};
 	LPSCI_WriteBlocking(DEMO_LPSCI, displayMSG, sizeof(displayMSG));
 }
+
+/*!
+ * Funkcia, ktorá zisťuje smer pohybu pomocou čítania hodnoty globálných premenných ako ideHore, ideDole.
+ * Následne číta aktuálný switch, okolo ktorého práve výťah prešiel a podľa toho vypíše číslo poschodia.
+ */
 
 void displaySmerSet(uint8_t poschodie){
 	if(ideHore == true){

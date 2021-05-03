@@ -5,6 +5,12 @@
  *      Author: Jojo
  */
 
+/**
+* @file Variables.c
+* @brief Zadefinovanie globálnych premenných programu
+*
+*/
+
 #include "Headers/Variables.h"
 
 volatile uint8_t message[BUFFER_SIZE];

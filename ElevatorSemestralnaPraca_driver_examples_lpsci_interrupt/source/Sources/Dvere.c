@@ -5,6 +5,13 @@
  *      Author: Jojo
  */
 
+/**
+* @file Dvere.c
+* @brief Funkcie na otváranie a zatváranie dverí výťahu
+* @details Pomocou nasledujúcich funkcií otvárame a zatvárame dvere výťahu
+*
+*/
+
 #include "Headers/Definitions.h"
 #include "Headers/Dvere.h"
 

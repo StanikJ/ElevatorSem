@@ -1,3 +1,10 @@
+/**
+* @file main.c
+* @brief hlavna funckia
+* @details Táto hlavná funkcia main spracováva prichádzajúce dáta, prebieha v nej základná incializácia a následne
+* prebieha spracovanie správy a vykonávanie jednotlivých príkazov v nekonečnom cykle
+*/
+
 #include "Headers/Crc8.h"
 #include "Headers/Komunikacia.h"
 #include "Headers/Definitions.h"
@@ -39,7 +46,8 @@ void DEMO_LPSCI_IRQHandler(void)
 }
 
 /*!
- * @brief Main function
+ * Main function
+ *
  */
 int main(void)
 {
