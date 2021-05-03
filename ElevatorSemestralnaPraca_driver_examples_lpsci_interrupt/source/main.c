@@ -5,18 +5,18 @@
 * prebieha spracovanie správy a vykonávanie jednotlivých príkazov v nekonečnom cykle
 */
 
-#include "Headers/Crc8.h"
-#include "Headers/Komunikacia.h"
-#include "Headers/Definitions.h"
-#include "Headers/Variables.h"
-#include "Headers/Delay.h"
-#include "Headers/Dvere.h"
-#include "Headers/Led.h"
-#include "Headers/Motor.h"
-#include "Headers/Display.h"
-#include "Headers/poschodieSet.h"
-#include "Headers/stlaceneTlacidla.h"
-#include "Headers/Variables.h"
+#include "Crc8.h"
+#include "Komunikacia.h"
+#include "Definitions.h"
+#include "Variables.h"
+#include "Delay.h"
+#include "Dvere.h"
+#include "Led.h"
+#include "Motor.h"
+#include "Display.h"
+#include "poschodieSet.h"
+#include "stlaceneTlacidla.h"
+#include "Variables.h"
 
 /*!
  * Funkcia, ktorá pomocou interruptov napĺňa komunikačný buffer. Akonáhle rxIndex dosiahne hodnotu 4, tak sa

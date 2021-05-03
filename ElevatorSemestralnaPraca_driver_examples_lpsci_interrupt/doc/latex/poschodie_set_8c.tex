@@ -1,0 +1,40 @@
+\hypertarget{poschodie_set_8c}{}\doxysection{source/poschodie\+Set.c File Reference}
+\label{poschodie_set_8c}\index{source/poschodieSet.c@{source/poschodieSet.c}}
+
+
+Funkcie na manipulovanie s poschodiami.  
+
+
+{\ttfamily \#include \char`\"{}Variables.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Motor.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Dvere.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Led.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Delay.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{poschodie_set_8c_ad4bd817d2b13aebaa223794b090437b8}{zastav\+Na\+Poschodi}} ()
+\item 
+void \mbox{\hyperlink{poschodie_set_8c_ab6f7fb3e36cb4af487c9065fbfebc07a}{nastav\+Dest}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Funkcie na manipulovanie s poschodiami. 
+
+Nasledujúce funkcie riešia zastavovanie výťahu na konkrétnom poschodí a nastavovanie smeru výťahu 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{poschodie_set_8c_ab6f7fb3e36cb4af487c9065fbfebc07a}\label{poschodie_set_8c_ab6f7fb3e36cb4af487c9065fbfebc07a}} 
+\index{poschodieSet.c@{poschodieSet.c}!nastavDest@{nastavDest}}
+\index{nastavDest@{nastavDest}!poschodieSet.c@{poschodieSet.c}}
+\doxysubsubsection{\texorpdfstring{nastavDest()}{nastavDest()}}
+{\footnotesize\ttfamily void nastav\+Dest (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá nastavuje požadované(cielové) poschodie podľa toho, či bolo stlačené tlačidlo a či bolo na hodnotu true nastavené jemu prislúchajúce poschodie. Následne rozpozná akým smerom sa má výťah vybrať. \mbox{\Hypertarget{poschodie_set_8c_ad4bd817d2b13aebaa223794b090437b8}\label{poschodie_set_8c_ad4bd817d2b13aebaa223794b090437b8}} 
+\index{poschodieSet.c@{poschodieSet.c}!zastavNaPoschodi@{zastavNaPoschodi}}
+\index{zastavNaPoschodi@{zastavNaPoschodi}!poschodieSet.c@{poschodieSet.c}}
+\doxysubsubsection{\texorpdfstring{zastavNaPoschodi()}{zastavNaPoschodi()}}
+{\footnotesize\ttfamily void zastav\+Na\+Poschodi (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá má za úlohu čítať aktualné switche výťahu. Popri čítaní nastavuje aktuálne poschodie na výpis na display a ak je prislúšné poschodie nastavene na true, tak na danom poschodí zastaví, otvorí dvere a vypne ledky. 

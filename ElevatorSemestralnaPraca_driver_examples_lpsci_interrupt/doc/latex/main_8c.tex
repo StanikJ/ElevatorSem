@@ -1,0 +1,46 @@
+\hypertarget{main_8c}{}\doxysection{source/main.c File Reference}
+\label{main_8c}\index{source/main.c@{source/main.c}}
+
+
+hlavna funckia  
+
+
+{\ttfamily \#include \char`\"{}Crc8.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Komunikacia.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Definitions.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Variables.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Delay.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Dvere.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Led.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Motor.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Display.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}poschodie\+Set.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stlacene\+Tlacidla.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_a1b32411cb5eef5d5447981e6181f229d}{DEMO\+\_\+\+LPSCI\+\_\+\+IRQHandler}} (void)
+\item 
+int \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+hlavna funckia 
+
+Táto hlavná funkcia main spracováva prichádzajúce dáta, prebieha v nej základná incializácia a následne prebieha spracovanie správy a vykonávanie jednotlivých príkazov v nekonečnom cykle 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_a1b32411cb5eef5d5447981e6181f229d}\label{main_8c_a1b32411cb5eef5d5447981e6181f229d}} 
+\index{main.c@{main.c}!DEMO\_LPSCI\_IRQHandler@{DEMO\_LPSCI\_IRQHandler}}
+\index{DEMO\_LPSCI\_IRQHandler@{DEMO\_LPSCI\_IRQHandler}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{DEMO\_LPSCI\_IRQHandler()}{DEMO\_LPSCI\_IRQHandler()}}
+{\footnotesize\ttfamily void DEMO\+\_\+\+LPSCI\+\_\+\+IRQHandler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Funkcia, ktorá pomocou interruptov napĺňa komunikačný buffer. Akonáhle rx\+Index dosiahne hodnotu 4, tak sa nastaví premenná message\+Complete na hodnotu 1, čo znamená, že správa je kompletná. Táto správa sa následne ďalej spracováva v main funkcii. \mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Main function 

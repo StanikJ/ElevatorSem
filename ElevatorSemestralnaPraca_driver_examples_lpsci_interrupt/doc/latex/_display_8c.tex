@@ -1,0 +1,39 @@
+\hypertarget{_display_8c}{}\doxysection{source/\+Display.c File Reference}
+\label{_display_8c}\index{source/Display.c@{source/Display.c}}
+
+
+Zobrazovanie pohybu výťahu.  
+
+
+{\ttfamily \#include \char`\"{}Definitions.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Variables.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Display.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Crc8.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_display_8c_aaa2754d195fdb8ee02830b18d160c1de}{Display}} (uint8\+\_\+t smer, uint8\+\_\+t poschodie)
+\item 
+void \mbox{\hyperlink{_display_8c_a2491a4e351592c79ae02a330e495eded}{display\+Smer\+Set}} (uint8\+\_\+t poschodie)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Zobrazovanie pohybu výťahu. 
+
+Nasldujúce funkcie vypisujú na display smer pohybu a aktuálne poschodie 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_display_8c_aaa2754d195fdb8ee02830b18d160c1de}\label{_display_8c_aaa2754d195fdb8ee02830b18d160c1de}} 
+\index{Display.c@{Display.c}!Display@{Display}}
+\index{Display@{Display}!Display.c@{Display.c}}
+\doxysubsubsection{\texorpdfstring{Display()}{Display()}}
+{\footnotesize\ttfamily void Display (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{smer,  }\item[{uint8\+\_\+t}]{poschodie }\end{DoxyParamCaption})}
+
+Funkcia, ktorá vypisuje na display, aktuálne číslo poschodia a smer pohybu výťahu \mbox{\Hypertarget{_display_8c_a2491a4e351592c79ae02a330e495eded}\label{_display_8c_a2491a4e351592c79ae02a330e495eded}} 
+\index{Display.c@{Display.c}!displaySmerSet@{displaySmerSet}}
+\index{displaySmerSet@{displaySmerSet}!Display.c@{Display.c}}
+\doxysubsubsection{\texorpdfstring{displaySmerSet()}{displaySmerSet()}}
+{\footnotesize\ttfamily void display\+Smer\+Set (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{poschodie }\end{DoxyParamCaption})}
+
+Funkcia, ktorá zisťuje smer pohybu pomocou čítania hodnoty globálných premenných ako ide\+Hore, ide\+Dole. Následne číta aktuálný switch, okolo ktorého práve výťah prešiel a podľa toho vypíše číslo poschodia. 
